@@ -4,4 +4,46 @@
     <select id="findAll" resultType="com.example.booksearchapp.entities.Book">
         SELECT * FROM books
     </select>
+    <select id="get" resultType="com.example.booksearchapp.entities.Book">
+        SELECT * FROM books WHERE id = #{id}
+    </select>
+    <select id="list" resultType="com.example.booksearchapp.entities.Book">
+        SELECT * FROM books
+        LEFT JOIN categorizations
+        ON books.id = categorizations.book_id
+        LEFT JOIN categories
+        ON categorizations.category_id = categories.id
+        LEFT JOIN book_labels
+        ON books.id = book_labels.book_id
+        LEFT JOIN labels
+        ON book_labels.label_id = labels.id
+        LEFT JOIN label_groups
+        ON labels.label_group_id = label_groups.id
+        WHERE books.is_deleted = 0;
+    </select>
+
+    <resultMap type="com.example.booksearchapp.entities.Book" id="bookLavel">
+        <id column="id" property="id"/>
+        <result column="isbn_code" property="isbnCode"/>
+        <result column="name" property="name"/>
+        <result column="number" property="number"/>
+        <result column="image_path" property="imagePath"/>
+        <result column="link" property="link"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <collection property="labels" ofType="com.example.booksearchapp.entities.Book">
+            <result column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="sort_number" property="sortNumber"/>
+            <result column="label_group_id" property="labelGroupId"/>
+        </collection>
+        <collection property="categorys" ofType="com.example.booksearchapp.entities.Book">
+            <result column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="id_deleted" property="idDeleted"/>
+            <result column="sort_number" property="sortNumber"/>
+        </collection>
+    </resultMap>
+
+
+
 </mapper>
