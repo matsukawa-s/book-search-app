@@ -1,6 +1,7 @@
 package com.example.booksearchapp.controllers;
 
 import com.example.booksearchapp.entities.Book;
+import com.example.booksearchapp.responses.BookResponse;
 import com.example.booksearchapp.services.IBookService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +20,14 @@ public class BookController {
     }
 
     @GetMapping("")
-    public List<Book> findAll(){
-        return bookService.findAll();
+    public List<BookResponse> findAll(){
+        List<Book> bookList = bookService.findAll();
+        return BookResponse.from(bookList);
     }
 
-    @GetMapping("/get/{id}")
-    public Book get(@PathVariable Integer id) { return bookService.get(id);}
+    @GetMapping("/{id}")
+    public BookResponse get(@PathVariable Integer id) {
+        Book book = bookService.get(id);
+        return BookResponse.from(book);
+    }
 }

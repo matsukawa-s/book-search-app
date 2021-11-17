@@ -1,11 +1,12 @@
 package com.example.booksearchapp.responses;
 
 
-import com.example.booksearchapp.entities.Category;
-import com.example.booksearchapp.entities.Label;
+
+import com.example.booksearchapp.entities.Book;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -17,6 +18,28 @@ public class BookResponse {
     Integer number;
     String imagePath;
     String link;
-    List<Label> labels;
-    List<Category> categories;
+    List<LabelResponse> labels;
+    List<CategoryResponse> categories;
+
+    public static BookResponse from(Book book){
+        BookResponse bookResponse = new BookResponse();
+        bookResponse.setId(book.getId());
+        bookResponse.setIsbnCode(book.getIsbnCode());
+        bookResponse.setName(book.getName());
+        bookResponse.setNumber(book.getNumber());
+        bookResponse.setImagePath(book.getImagePath());
+        bookResponse.setLink(book.getLink());
+        bookResponse.setLabels(LabelResponse.from(book.getLabels()));
+        bookResponse.setCategories(CategoryResponse.from(book.getCategories()));
+        return bookResponse;
+    }
+
+    public static List<BookResponse> from(List<Book> books){
+        List<BookResponse> result = new ArrayList<>();
+        for (Book book : books){
+            result.add(BookResponse.from(book));
+        }
+        return result;
+    }
 }
+
