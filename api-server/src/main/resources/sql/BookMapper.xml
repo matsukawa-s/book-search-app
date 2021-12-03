@@ -98,7 +98,11 @@
         WHERE books.is_deleted = 0
             <if test="nameParam != null and nameParam != ''">AND books.name LIKE'%${nameParam}%'</if>
             <if test="labelParam != null and labelParam != ''">AND labels.id = #{labelParam}</if>
-            <if test="categoryParam != null and categoryParam != ''">AND categories.id = #{categoryParam}</if>
+            <if test="categoryParam != null and categoryParam != ''">AND categories.id IN
+                <foreach item="category" open="(" close=")" collection="categoryParam" separator=",">
+                    #{category}
+                </foreach>
+            </if>
     </select>
 
 

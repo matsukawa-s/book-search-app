@@ -12,5 +12,5 @@ import java.util.List;
 public class SearchForm {
     String nameParam;
     String labelParam;
-    String categoryParam;
+    List<String> categoryParam;
 }
