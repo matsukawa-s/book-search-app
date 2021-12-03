@@ -96,10 +96,10 @@
         LEFT JOIN label_groups
             ON labels.label_group_id = label_groups.id
         WHERE books.is_deleted = 0
-            <if test="nameParam != null and nameParam != ''">AND books.name LIKE'%${nameParam}%'</if>
-            <if test="labelParam != null and labelParam != ''">AND labels.id = #{labelParam}</if>
-            <if test="categoryParam != null and categoryParam != ''">AND categories.id IN
-                <foreach item="category" open="(" close=")" collection="categoryParam" separator=",">
+            <if test="name != null and name != ''">AND books.name LIKE'%${name}%'</if>
+            <if test="label != null and label != ''">AND labels.id = #{label}</if>
+            <if test="category != null and category != ''">AND categories.id IN
+                <foreach item="category" open="(" close=")" collection="category" separator=",">
                     #{category}
                 </foreach>
             </if>

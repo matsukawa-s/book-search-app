@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 
 public class SearchForm {
-    String nameParam;
-    String labelParam;
-    List<String> categoryParam;
+    String name;
+    String label;
+    List<String> category;
 }
