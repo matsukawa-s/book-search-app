@@ -17,4 +17,5 @@ public class Book {
     Boolean isDeleted;
     List<Label> labels;
     List<Category> categories;
+    Integer booksCount;
 }

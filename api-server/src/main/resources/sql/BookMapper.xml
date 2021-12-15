@@ -21,7 +21,9 @@
             labels.label_group_id   as  labels_label_group_id,
             categories.id           as  categories_id,
             categories.name         as  categories_name,
-            categories.id_deleted   as  categories_id_deleted
+            categories.id_deleted   as  categories_id_deleted,
+            categories.sort_number  as  categories_sort_number,
+            books.number - count(lendings.lending_time)  as  books_count
         FROM books
         LEFT JOIN categorizations
             ON books.id = categorizations.book_id
@@ -33,7 +35,15 @@
             ON book_labels.label_id = labels.id
         LEFT JOIN label_groups
             ON labels.label_group_id = label_groups.id
-        WHERE books.is_deleted = 0;
+        LEFT JOIN lendings
+            ON books.id = lendings.book_id
+        WHERE books.is_deleted = 0
+            AND lendings.return_time IS NULL
+        GROUP BY
+            books.id,
+            labels.id,
+            categories.id
+        ;
     </select>
 
     <!-- 書籍の一件取得 -->
@@ -52,7 +62,9 @@
             labels.label_group_id   as  labels_label_group_id,
             categories.id           as  categories_id,
             categories.name         as  categories_name,
-            categories.id_deleted   as  categories_id_deleted
+            categories.id_deleted   as  categories_id_deleted,
+            categories.sort_number  as  categories_sort_number,
+            books.number - count(lendings.lending_time)  as  books_count
         FROM books
         LEFT JOIN categorizations
             ON books.id = categorizations.book_id
@@ -64,7 +76,15 @@
             ON book_labels.label_id = labels.id
         LEFT JOIN label_groups
             ON labels.label_group_id = label_groups.id
+        LEFT JOIN lendings
+            ON books.id = lendings.book_id
         WHERE books.id = #{id}
+            AND books.is_deleted = 0
+            AND lendings.return_time IS NULL
+        GROUP BY
+            books.id,
+            labels.id,
+            categories.id
     </select>
 
     <!-- 書籍の検索 -->
@@ -83,7 +103,9 @@
             labels.label_group_id   as  labels_label_group_id,
             categories.id           as  categories_id,
             categories.name         as  categories_name,
-            categories.id_deleted   as  categories_id_deleted
+            categories.id_deleted   as  categories_id_deleted,
+            categories.sort_number  as  categories_sort_number,
+            books.number - count(lendings.lending_time)  as  books_count
         FROM books
         LEFT JOIN categorizations
             ON books.id = categorizations.book_id
@@ -95,14 +117,21 @@
             ON book_labels.label_id = labels.id
         LEFT JOIN label_groups
             ON labels.label_group_id = label_groups.id
+        LEFT JOIN lendings
+            ON books.id = lendings.book_id
         WHERE books.is_deleted = 0
-            <if test="name != null and name != ''">AND books.name LIKE'%${name}%'</if>
-            <if test="label != null and label != ''">AND labels.id = #{label}</if>
-            <if test="category != null and category != ''">AND categories.id IN
-                <foreach item="category" open="(" close=")" collection="category" separator=",">
-                    #{category}
-                </foreach>
-            </if>
+            AND lendings.return_time IS NULL
+        <if test="name != null and name != ''">AND books.name LIKE'%${name}%'</if>
+        <if test="label != null and label != ''">AND labels.id = #{label}</if>
+        <if test="category != null and category != ''">AND categories.id IN
+            <foreach item="category" open="(" close=")" collection="category" separator=",">
+                #{category}
+            </foreach>
+        </if>
+        GROUP BY
+            books.id,
+            labels.id,
+            categories.id
     </select>
 
 
@@ -123,6 +152,7 @@
         <result column="books_image_path" property="imagePath"/>
         <result column="books_link" property="link"/>
         <result column="books_is_deleted" property="isDeleted"/>
+        <result column="books_count" property="booksCount"/>
         <collection property="labels" ofType="com.example.booksearchapp.entities.Label">
             <result column="labels_id" property="id"/>
             <result column="labels_name" property="name"/>
