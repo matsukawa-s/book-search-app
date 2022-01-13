@@ -9,7 +9,7 @@ import java.util.Date;
 @Setter
 public class Lending {
     Integer id;
-    Integer bookId;
+    Book book;
     Integer userId;
     Date lendingTime;
     Date returnTime;

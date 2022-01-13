@@ -1,9 +1,11 @@
 package com.example.booksearchapp.services;
 
 import com.example.booksearchapp.entities.Book;
+import com.example.booksearchapp.entities.Lending;
 import com.example.booksearchapp.forms.SearchForm;
 import com.example.booksearchapp.mappers.BookMapper;
 import com.example.booksearchapp.mappers.LendingAndBorrowingMapper;
+import com.example.booksearchapp.responses.LendingResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +43,16 @@ public class BookService implements IBookService {
     @Override
     public Integer returnBook(Integer id) {
         return lendingAndBorrowingMapper.returnBook(id);
+    }
+
+    @Override
+    public List<Lending> lending() {
+        return lendingAndBorrowingMapper.lending();
+    }
+
+    @Override
+    public List<Lending> history() {
+        return lendingAndBorrowingMapper.history();
     }
 
 

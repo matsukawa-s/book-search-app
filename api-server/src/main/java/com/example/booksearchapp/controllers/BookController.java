@@ -1,8 +1,11 @@
 package com.example.booksearchapp.controllers;
 
 import com.example.booksearchapp.entities.Book;
+import com.example.booksearchapp.entities.Lending;
 import com.example.booksearchapp.forms.SearchForm;
 import com.example.booksearchapp.responses.BookResponse;
+import com.example.booksearchapp.responses.HistoryResponse;
+import com.example.booksearchapp.responses.LendingResponse;
 import com.example.booksearchapp.services.IBookService;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,5 +50,17 @@ public class BookController {
     public Integer returnBook(Integer id){
         Integer lending = bookService.returnBook(id);
         return lending;
+    }
+
+    @GetMapping("/lending")
+    public List<LendingResponse> lending(){
+        List<Lending> lending = bookService.lending();
+        return LendingResponse.from(lending);
+    }
+
+    @GetMapping("/history")
+    public List<HistoryResponse> history() {
+        List<Lending> lending = bookService.history();
+        return HistoryResponse.from(lending);
     }
 }

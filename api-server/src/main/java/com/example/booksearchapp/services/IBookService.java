@@ -1,6 +1,7 @@
 package com.example.booksearchapp.services;
 
 import com.example.booksearchapp.entities.Book;
+import com.example.booksearchapp.entities.Lending;
 import com.example.booksearchapp.forms.SearchForm;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface IBookService {
     List<Book> search(SearchForm searchForm);
     Integer borrow(Integer id);
     Integer returnBook(Integer id);
+    List<Lending> lending();
+    List<Lending> history();
 }
