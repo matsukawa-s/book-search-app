@@ -14,14 +14,12 @@
             books.number            as  books_number,
             books.image_path        as  books_image_path,
             books.link              as  books_link,
-            books.is_deleted        as  books_is_deleted,
             labels.id               as  labels_id,
             labels.name             as  labels_name,
             labels.sort_number      as  labels_sort_number,
             labels.label_group_id   as  labels_label_group_id,
             categories.id           as  categories_id,
             categories.name         as  categories_name,
-            categories.id_deleted   as  categories_id_deleted,
             categories.sort_number  as  categories_sort_number,
             books.number - count(lendings.lending_time)  as  books_count
         FROM books
@@ -55,14 +53,12 @@
             books.number            as  books_number,
             books.image_path        as  books_image_path,
             books.link              as  books_link,
-            books.is_deleted        as  books_is_deleted,
             labels.id               as  labels_id,
             labels.name             as  labels_name,
             labels.sort_number      as  labels_sort_number,
             labels.label_group_id   as  labels_label_group_id,
             categories.id           as  categories_id,
             categories.name         as  categories_name,
-            categories.id_deleted   as  categories_id_deleted,
             categories.sort_number  as  categories_sort_number,
             books.number - count(lendings.lending_time)  as  books_count
         FROM books
@@ -96,14 +92,12 @@
             books.number            as  books_number,
             books.image_path        as  books_image_path,
             books.link              as  books_link,
-            books.is_deleted        as  books_is_deleted,
             labels.id               as  labels_id,
             labels.name             as  labels_name,
             labels.sort_number      as  labels_sort_number,
             labels.label_group_id   as  labels_label_group_id,
             categories.id           as  categories_id,
             categories.name         as  categories_name,
-            categories.id_deleted   as  categories_id_deleted,
             categories.sort_number  as  categories_sort_number,
             books.number - count(lendings.lending_time)  as  books_count
         FROM books

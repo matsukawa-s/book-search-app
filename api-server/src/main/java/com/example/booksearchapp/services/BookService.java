@@ -37,7 +37,12 @@ public class BookService implements IBookService {
 
     @Override
     public Integer borrow(Integer id) {
-        return lendingAndBorrowingMapper.borrow(id);
+        Integer count = lendingAndBorrowingMapper.count(id);
+        if(count <= 0){
+            return 0;
+        }else{
+            return lendingAndBorrowingMapper.borrow(id);
+        }
     }
 
     @Override

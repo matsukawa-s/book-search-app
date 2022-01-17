@@ -11,4 +11,5 @@ public interface LendingAndBorrowingMapper {
     public Integer returnBook(Integer id);
     public List<Lending> lending();
     public List<Lending> history();
+    public Integer count(Integer id);
 }

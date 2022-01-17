@@ -51,6 +51,17 @@
         ORDER BY lendings.lending_time DESC
     </select>
 
+    <select id="count" resultType="Integer">
+        SELECT
+            books.number - count(lendings.lending_time)  as  books_count
+        FROM books
+        LEFT JOIN lendings
+            ON books.id = lendings.book_id
+        WHERE books.is_deleted = 0
+        AND lendings.return_time IS NULL
+        AND books.id = #{id}
+    </select>
+
 
     <resultMap type="com.example.booksearchapp.entities.Lending" id="lendingList">
         <id column="lendings_id" property="id"/>
