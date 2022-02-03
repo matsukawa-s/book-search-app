@@ -1,6 +1,8 @@
 package com.example.booksearchapp.services;
 
 import com.example.booksearchapp.entities.Book;
+import com.example.booksearchapp.entities.Category;
+import com.example.booksearchapp.entities.Label;
 import com.example.booksearchapp.entities.Lending;
 import com.example.booksearchapp.forms.SearchForm;
 import com.example.booksearchapp.mappers.BookMapper;
@@ -60,5 +62,19 @@ public class BookService implements IBookService {
         return lendingAndBorrowingMapper.history();
     }
 
+    @Override
+    public List<Lending> bookhistory(Integer id) {
+        return lendingAndBorrowingMapper.bookHistory(id);
+    }
+
+    @Override
+    public List<Category> categoryList(){
+        return bookMapper.categoryList();
+    }
+
+    @Override
+    public List<Label> labelList() {
+        return bookMapper.labelList();
+    }
 
 }

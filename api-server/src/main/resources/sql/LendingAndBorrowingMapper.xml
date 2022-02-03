@@ -52,14 +52,26 @@
     </select>
 
     <select id="count" resultType="Integer">
-        SELECT
-            books.number - count(lendings.lending_time)  as  books_count
+        SELECT books.number - (SELECT COUNT(*)
+                               FROM lendings
+                               WHERE return_time IS NULL
+                               AND book_id = #{id})
         FROM books
-        LEFT JOIN lendings
-            ON books.id = lendings.book_id
-        WHERE books.is_deleted = 0
-        AND lendings.return_time IS NULL
-        AND books.id = #{id}
+        WHERE id = #{id}
+    </select>
+
+    <!-- 本詳細ページ　貸出履歴 -->
+    <select id="bookHistory" resultMap="lendingList">
+        SELECT
+            lendings.lending_time   as  lendings_lending_time,
+            users.first_name        as  users_first_name,
+            users.last_name         as  users_last_name
+        FROM lendings
+        LEFT JOIN users
+            ON lendings.user_id = users.id
+        WHERE lendings.book_id = #{id}
+        ORDER BY lendings.lending_time DESC
+        LIMIT 3
     </select>
 
 
@@ -72,6 +84,11 @@
             <id column="books_id" property="id"/>
             <result column="books_name" property="name"/>
             <result column="books_image_path" property="imagePath"/>
+        </association>
+        <association property="user" javaType="com.example.booksearchapp.entities.User">
+            <id column="users_id" property="id"/>
+            <result column="users_first_name" property="firstName"/>
+            <result column="users_last_name" property="lastName"/>
         </association>
     </resultMap>
 

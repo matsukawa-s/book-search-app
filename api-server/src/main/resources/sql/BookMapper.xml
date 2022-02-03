@@ -128,12 +128,25 @@
             categories.id
     </select>
 
+    <!-- カテゴリ一覧 -->
+    <select id="categoryList" resultType="com.example.booksearchapp.entities.Category">
+        SELECT
+            id,
+            name
+        FROM categories
+        WHERE id_deleted = 0
+        ORDER BY sort_number
+    </select>
 
-
-
-
-
-
+    <!-- ラベル一覧 -->
+    <select id="labelList" resultType="com.example.booksearchapp.entities.Label">
+        SELECT
+            id,
+            name
+        FROM labels
+        WHERE label_group_id = 1
+        ORDER BY sort_number
+    </select>
 
 
 
